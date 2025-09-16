@@ -1,0 +1,13 @@
+---
+globs: *.tsx,*.css
+description: Tailwind v4 and UI helpers usage in this project
+---
+### Tailwind & UI Utilities
+
+- **Tailwind v4**: Classes live in markup; global layer in `src/app/globals.css`.
+- **Classnames**: Prefer `clsx` and `tailwind-merge` for conditional classes.
+- **Spacing & scales**: Use design tokens from Tailwind defaults; avoid arbitrary values unless necessary.
+- **Dark mode**: Use `dark:` variants; avoid inline style overrides.
+- **Icons**: Use `lucide-react` components; keep size via Tailwind classes.
+- **CVA**: Use `class-variance-authority` to define component variants when needed.
+- **Accessibility**: Ensure focus states are visible; use `aria-*` attributes.

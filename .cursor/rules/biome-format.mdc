@@ -1,0 +1,15 @@
+---
+alwaysApply: true
+description: Biome formatter, linter, and assist rules for this project
+---
+### Biome, Linting, and Formatting
+
+- **Formatter**: 2-space indent, spaces not tabs. Follow project `biome.json`.
+- **Commands**: `pnpm format` to write; `pnpm lint` to check.
+- **Organize imports**: Biome assist is enabled for auto import organization.
+- **Linter**: Next and React domains are set to `recommended`.
+- **CSS at-rules**: `noUnknownAtRules` is disabled to support Tailwind.
+
+#### Authoring Tips
+- Keep edits small and focused; avoid reformatting unrelated code.
+- Address linter errors before committing changes.

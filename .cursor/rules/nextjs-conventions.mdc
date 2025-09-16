@@ -1,0 +1,15 @@
+---
+description: Next.js 15 App Router conventions used in this project
+globs: src/app/**/*
+---
+### Next.js Conventions (App Router)
+
+- **File routing**: Use `page.tsx` for routes, `layout.tsx` for wrappers.
+- **Metadata**: Export `metadata: Metadata` in layouts/pages where needed.
+- **Server-first**: Prefer Server Components; add `'use client'` only when needed.
+- **Fonts**: Load with `next/font` in `layout.tsx` as variables; apply on `<body>`.
+- **Images**: Use `next/image`. Keep assets in `public/`.
+- **Styling**: Tailwind in `globals.css`; keep route-level styles minimal.
+- **Links**: Use `next/link` for internal navigation.
+- **Data fetching**: Use async Server Components or Route Handlers as appropriate.
+- **Env**: Access only server-safe env in Server Components; expose via `NEXT_PUBLIC_` for client.

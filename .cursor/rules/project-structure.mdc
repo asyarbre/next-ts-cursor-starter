@@ -1,0 +1,26 @@
+---
+alwaysApply: true
+---
+### Project Structure Guide
+
+- **App Router**: Next.js 15 with React 19 using the `src/app` directory.
+- **Entry points**: `src/app/layout.tsx` wraps pages; `src/app/page.tsx` is the home route.
+- **Global styles**: `src/app/globals.css` with Tailwind v4.
+- **Utilities**: Shared helpers in `src/lib` (e.g., [`src/lib/utils.ts`](mdc:src/lib/utils.ts)).
+- **Public assets**: Static files in `public/`.
+- **Configs**: Next (`next.config.ts`), TypeScript (`tsconfig.json`), Biome (`biome.json`), Tailwind (`postcss.config.mjs`).
+
+#### Conventions
+- **TypeScript**: Prefer explicit types for public APIs and Next metadata.
+- **Components**: Co-locate server/client components under `src/app/*` as needed.
+- **Fonts**: Loaded via `next/font` in `layout.tsx`.
+- **Images**: Use `next/image` for optimized assets.
+
+#### Key Files
+- [`src/app/layout.tsx`](mdc:src/app/layout.tsx)
+- [`src/app/page.tsx`](mdc:src/app/page.tsx)
+- [`src/app/globals.css`](mdc:src/app/globals.css)
+- [`src/lib/utils.ts`](mdc:src/lib/utils.ts)
+- [`biome.json`](mdc:biome.json)
+- [`next.config.ts`](mdc:next.config.ts)
+- [`tsconfig.json`](mdc:tsconfig.json)

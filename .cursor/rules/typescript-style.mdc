@@ -1,0 +1,22 @@
+---
+globs: *.ts,*.tsx
+description: Local TypeScript and React style guidance for this project
+---
+### TypeScript & React Style
+
+- **Types first**: Export explicit types for public utilities and component props.
+- **Function components**: Use `function` declarations over arrow components for pages/layouts.
+- **Props typing**: Define `Props` interfaces; avoid `any` and wide casts.
+- **Server vs Client**: Add `'use client'` only when needed; default to Server Components.
+- **Naming**: Use descriptive names; avoid abbreviations. Variables are nouns; functions are verbs.
+- **Imports**: Prefer type-only imports when applicable. Keep imports organized.
+- **Control flow**: Use guard clauses and early returns; avoid deep nesting.
+- **Errors**: Never swallow errors; handle meaningfully or rethrow.
+- **Comments**: Comment “why”, not “how”; keep concise and above code.
+- **Formatting**: Follow Biome settings (2 spaces, no semicolons unless enforced by Biome).
+- **Next Metadata**: Type `metadata` as `Metadata` from `next`.
+
+#### React specifics
+- **Images**: Use `next/image` where possible.
+- **Classnames**: Use `clsx` and `tailwind-merge` helpers from `src/lib/utils.ts` if provided.
+- **Accessibility**: Provide `alt`, `aria-*`, and sensible focus states.
