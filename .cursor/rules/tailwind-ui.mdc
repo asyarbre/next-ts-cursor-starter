@@ -1,13 +1,9 @@
 ---
-globs: *.tsx,*.css
-description: Tailwind v4 and UI helpers usage in this project
+globs: *.ts,*.tsx,*.css
 ---
-### Tailwind & UI Utilities
+## Tailwind Usage
 
-- **Tailwind v4**: Classes live in markup; global layer in `src/app/globals.css`.
-- **Classnames**: Prefer `clsx` and `tailwind-merge` for conditional classes.
-- **Spacing & scales**: Use design tokens from Tailwind defaults; avoid arbitrary values unless necessary.
-- **Dark mode**: Use `dark:` variants; avoid inline style overrides.
-- **Icons**: Use `lucide-react` components; keep size via Tailwind classes.
-- **CVA**: Use `class-variance-authority` to define component variants when needed.
-- **Accessibility**: Ensure focus states are visible; use `aria-*` attributes.
+- Use Tailwind v4 utility classes for styling; avoid inline `style` unless necessary.
+- Compose classes with the `cn` helper from [src/lib/utils.ts](mdc:src/lib/utils.ts). Example: `className={cn("p-4", isActive && "bg-foreground")}`.
+- Prefer semantic spacing and sizing tokens where available; avoid magic numbers.
+- Keep class lists readable: group by layout, box-model, typography, color, state.
