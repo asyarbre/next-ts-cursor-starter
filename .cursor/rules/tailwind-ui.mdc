@@ -1,9 +1,110 @@
 ---
-globs: *.ts,*.tsx,*.css
+globs: *.tsx,*.ts,globals.css
 ---
-## Tailwind Usage
 
-- Use Tailwind v4 utility classes for styling; avoid inline `style` unless necessary.
-- Compose classes with the `cn` helper from [src/lib/utils.ts](mdc:src/lib/utils.ts). Example: `className={cn("p-4", isActive && "bg-foreground")}`.
-- Prefer semantic spacing and sizing tokens where available; avoid magic numbers.
-- Keep class lists readable: group by layout, box-model, typography, color, state.
+# Tailwind CSS and UI Component Guidelines
+
+## Tailwind CSS v4 Setup
+
+This project uses Tailwind CSS v4 with the following configuration:
+- Global styles in [globals.css](mdc:src/app/globals.css)
+- CSS variables for theming (configured in [components.json](mdc:components.json))
+- Base color: neutral
+- New York style for ShadCN/UI components
+
+## Utility Class Patterns
+
+- Use **semantic grouping** of classes (layout, spacing, colors, etc.)
+- Use `clsx` or `cn` utility for conditional classes
+- Prefer Tailwind utilities over custom CSS when possible
+- Use CSS variables for theme-aware colors
+
+```typescript
+import { cn } from '@/lib/utils'
+
+// Good class organization
+<div className={cn(
+  // Layout
+  "flex items-center justify-between",
+  // Spacing
+  "p-4 gap-2",
+  // Colors & styling
+  "bg-background text-foreground rounded-md border",
+  // Conditional classes
+  isActive && "bg-accent text-accent-foreground"
+)} />
+```
+
+## ShadCN/UI Component Usage
+
+- Install components using: `npx shadcn@latest add <component>`
+- Components are configured for **New York style** in [components.json](mdc:components.json)
+- Use **Lucide React** for icons (configured icon library)
+- Customize components by editing files in `src/components/ui/`
+
+```typescript
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+```
+
+## Component Composition
+
+- Use **compound components** pattern for complex UI
+- Leverage **class-variance-authority** for component variants
+- Use **Tailwind Merge** to handle class conflicts
+- Create reusable variant patterns
+
+```typescript
+import { cva, type VariantProps } from 'class-variance-authority'
+
+const buttonVariants = cva(
+  // base styles
+  "inline-flex items-center justify-center rounded-md font-medium transition-colors",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+      },
+      size: {
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-11 rounded-md px-8",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+```
+
+## Responsive Design
+
+- Use **mobile-first** approach
+- Use consistent breakpoints: `sm:`, `md:`, `lg:`, `xl:`, `2xl:`
+- Test responsive behavior for all components
+- Use CSS Grid and Flexbox utilities effectively
+
+```typescript
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  {/* Responsive grid */}
+</div>
+```
+
+## Dark Mode & Theming
+
+- Use CSS variables for theme colors (configured in globals.css)
+- Implement `dark:` variants consistently
+- Use `bg-background`, `text-foreground` for theme-aware colors
+- Test both light and dark themes
+
+## Accessibility
+
+- Use semantic HTML elements
+- Include proper ARIA attributes
+- Ensure sufficient color contrast
+- Test keyboard navigation
+- Use ShadCN/UI components which include accessibility by default

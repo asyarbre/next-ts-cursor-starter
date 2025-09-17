@@ -1,22 +1,100 @@
 ---
 globs: *.ts,*.tsx
-description: Local TypeScript and React style guidance for this project
 ---
-### TypeScript & React Style
 
-- **Types first**: Export explicit types for public utilities and component props.
-- **Function components**: Use `function` declarations over arrow components for pages/layouts.
-- **Props typing**: Define `Props` interfaces; avoid `any` and wide casts.
-- **Server vs Client**: Add `'use client'` only when needed; default to Server Components.
-- **Naming**: Use descriptive names; avoid abbreviations. Variables are nouns; functions are verbs.
-- **Imports**: Prefer type-only imports when applicable. Keep imports organized.
-- **Control flow**: Use guard clauses and early returns; avoid deep nesting.
-- **Errors**: Never swallow errors; handle meaningfully or rethrow.
-- **Comments**: Comment “why”, not “how”; keep concise and above code.
-- **Formatting**: Follow Biome settings (2 spaces, no semicolons unless enforced by Biome).
-- **Next Metadata**: Type `metadata` as `Metadata` from `next`.
+# TypeScript Coding Standards
 
-#### React specifics
-- **Images**: Use `next/image` where possible.
-- **Classnames**: Use `clsx` and `tailwind-merge` helpers from `src/lib/utils.ts` if provided.
-- **Accessibility**: Provide `alt`, `aria-*`, and sensible focus states.
+## Type Definitions
+
+- Use **interfaces** for object shapes that might be extended
+- Use **type aliases** for unions, intersections, and computed types
+- Use **PascalCase** for type names and interfaces
+- Prefer explicit return types for functions
+- Use **strict mode** settings (configured in [tsconfig.json](mdc:tsconfig.json))
+
+```typescript
+// Good
+interface User {
+  id: string
+  name: string
+}
+
+type Status = 'pending' | 'completed' | 'error'
+
+// Function with explicit return type
+function getUser(id: string): Promise<User> {
+  return fetch(`/api/users/${id}`).then(res => res.json())
+}
+```
+
+## React Component Types
+
+- Use **React.FC** sparingly, prefer explicit typing
+- Use **PropsWithChildren** when components accept children
+- Define prop interfaces inline for simple components
+- Extract complex prop types to separate interfaces
+
+```typescript
+// Preferred approach
+interface ButtonProps {
+  variant: 'primary' | 'secondary'
+  onClick: () => void
+  children: React.ReactNode
+}
+
+function Button({ variant, onClick, children }: ButtonProps) {
+  // implementation
+}
+
+// For pages with params/searchParams
+interface PageProps {
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+```
+
+## Import/Export Patterns
+
+- Use **named exports** for utilities and hooks
+- Use **default exports** for React components and pages
+- Group imports: external libraries, internal modules, relative imports
+- Use **type-only imports** when appropriate
+
+```typescript
+import type { Metadata } from 'next'
+import { clsx } from 'clsx'
+
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+
+import './styles.css'
+```
+
+## Error Handling
+
+- Use proper TypeScript error types
+- Implement type-safe error boundaries
+- Use `unknown` for caught errors, then narrow the type
+
+```typescript
+try {
+  // risky operation
+} catch (error) {
+  if (error instanceof Error) {
+    console.error(error.message)
+  }
+}
+```
+
+## Next.js Specific Types
+
+- Use `NextRequest` and `NextResponse` for API routes
+- Use proper page prop types for App Router
+- Leverage Next.js built-in types for metadata, layouts, etc.
+
+## Path Aliases
+
+Always use configured path aliases from [tsconfig.json](mdc:tsconfig.json):
+- `@/components` instead of relative paths to components
+- `@/lib/utils` for utility functions
+- `@/hooks` for custom hooks

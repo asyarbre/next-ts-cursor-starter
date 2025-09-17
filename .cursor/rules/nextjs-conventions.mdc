@@ -1,15 +1,81 @@
 ---
-description: Next.js 15 App Router conventions used in this project
-globs: src/app/**/*
+globs: **/app/**/*.tsx
 ---
-### Next.js Conventions (App Router)
 
-- **File routing**: Use `page.tsx` for routes, `layout.tsx` for wrappers.
-- **Metadata**: Export `metadata: Metadata` in layouts/pages where needed.
-- **Server-first**: Prefer Server Components; add `'use client'` only when needed.
-- **Fonts**: Load with `next/font` in `layout.tsx` as variables; apply on `<body>`.
-- **Images**: Use `next/image`. Keep assets in `public/`.
-- **Styling**: Tailwind in `globals.css`; keep route-level styles minimal.
-- **Links**: Use `next/link` for internal navigation.
-- **Data fetching**: Use async Server Components or Route Handlers as appropriate.
-- **Env**: Access only server-safe env in Server Components; expose via `NEXT_PUBLIC_` for client.
+# Next.js 15 App Router Conventions
+
+## App Router Structure
+
+Follow Next.js 15 App Router conventions for file organization:
+
+```
+src/app/
+├── layout.tsx          # Root layout (required)
+├── page.tsx           # Home page
+├── loading.tsx        # Loading UI
+├── error.tsx          # Error UI
+├── not-found.tsx      # 404 page
+├── global-error.tsx   # Global error UI
+└── [feature]/
+    ├── layout.tsx     # Feature layout
+    ├── page.tsx       # Feature page
+    ├── loading.tsx    # Feature loading
+    └── error.tsx      # Feature error
+```
+
+## Special Files
+
+- **`layout.tsx`** - Shared UI for route segments
+- **`page.tsx`** - Route UI (makes routes publicly accessible)
+- **`loading.tsx`** - Loading UI for route segments
+- **`error.tsx`** - Error UI for route segments
+- **`not-found.tsx`** - Not found UI
+- **`route.ts`** - API endpoint
+
+## Server vs Client Components
+
+- **Default to Server Components** - Use `"use client"` only when needed
+- **Use Client Components** for:
+  - Interactive elements (onClick, onChange, etc.)
+  - Browser-only APIs (localStorage, window, etc.)
+  - React hooks (useState, useEffect, etc.)
+  - Event listeners
+
+## Data Fetching
+
+- Use `async/await` directly in Server Components
+- Use React 19 features like `use()` hook for data fetching
+- Implement proper loading and error states
+
+## Metadata
+
+Export `metadata` object or `generateMetadata` function from pages and layouts:
+
+```typescript
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Page Title',
+  description: 'Page description',
+}
+```
+
+## Route Handlers (API Routes)
+
+Create in `app/api/` directory with `route.ts` files:
+
+```typescript
+import { NextRequest, NextResponse } from 'next/server'
+
+export async function GET(request: NextRequest) {
+  return NextResponse.json({ data: 'response' })
+}
+```
+
+## Performance Best Practices
+
+- Use `dynamic` imports for code splitting
+- Implement proper `loading.tsx` files
+- Use `Suspense` boundaries appropriately
+- Optimize images with `next/image`
+- Use `next/font` for font optimization (configured in [layout.tsx](mdc:src/app/layout.tsx))
